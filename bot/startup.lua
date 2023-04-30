@@ -15,7 +15,7 @@ function needsFuel(moveDistance)
     return false
 end
 
- 
+
 function mine(xWidth, zWidth, depth)
     -- Begin by mining block underneath
     local forward = true
@@ -47,6 +47,7 @@ function mine(xWidth, zWidth, depth)
             forward = not forward
         end
         print("returning")
+        break
         -- return 
         turtle.turnRight()
         turtle.turnRight()
