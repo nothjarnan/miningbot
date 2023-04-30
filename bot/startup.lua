@@ -50,6 +50,10 @@ function mine(xWidth, zWidth, depth)
         turtle.turnRight()
         -- back to square 1
     end
+    -- return to surface
+    for layer=1, depth-1, 1 do 
+        turtle.up()
+    end
 end
 print("minebot")
 mine(3,3,3)
