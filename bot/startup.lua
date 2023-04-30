@@ -20,15 +20,19 @@ function mine(xWidth, zWidth, depth)
     -- Begin by mining block underneath
     local forward = true
     
-    for layer=1, depth-1, 1 do 
+    for layer=0, depth-1, 1 do 
         turtle.digDown()
         turtle.down()
-        for right=1, xWidth-1, 1 do 
-            for fwd=1, zWidth-1, 1 do 
+        for right=0, xWidth-1, 1 do 
+            for fwd=0, zWidth-1, 1 do 
                 turtle.dig()
                 turtle.forward()
+                print("dig forward")
+                print(fwd, zWidth)
             end
+            print(right, xWidth)
             if forward then 
+                print(forward)
                 turtle.turnRight()
                 turtle.dig()
                 turtle.forward()
@@ -41,6 +45,7 @@ function mine(xWidth, zWidth, depth)
             end
             forward = not forward
         end
+        print("returning")
         -- return 
         turtle.turnRight()
         turtle.turnRight()
