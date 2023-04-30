@@ -59,6 +59,7 @@ function mine(xWidth, zWidth, depth)
     for layer=1, depth-1, 1 do 
         turtle.up()
     end
+    print("test")
 end
 print("minebot")
 mine(3,3,3)
