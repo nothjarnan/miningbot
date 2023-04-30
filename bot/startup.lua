@@ -15,6 +15,13 @@ function needsFuel(moveDistance)
     return false
 end
 
+function moveClearObstruction(amount) 
+    local has_block, data = turtle.inspect()
+    if has_block then 
+        turtle.dig()
+    end
+    turtle.forward(amount)
+end
 
 function mine(xWidth, zWidth, depth)
     -- Begin by mining block underneath
@@ -26,7 +33,7 @@ function mine(xWidth, zWidth, depth)
         for right=1, xWidth-1, 1 do 
             for fwd=1, zWidth-1, 1 do 
                 turtle.dig()
-                turtle.forward()
+                moveClearObstruction()
                 print("dig forward")
                 print(fwd, zWidth)
             end
@@ -35,12 +42,12 @@ function mine(xWidth, zWidth, depth)
                 print(forward)
                 turtle.turnRight()
                 turtle.dig()
-                turtle.forward()
+                moveClearObstruction()
                 turtle.turnRight()
             else 
                 turtle.turnLeft()
                 turtle.dig()
-                turtle.forward()
+                moveClearObstruction()
                 turtle.turnLeft()
             end
             turtle.dig()
@@ -51,9 +58,9 @@ function mine(xWidth, zWidth, depth)
         -- return 
         turtle.turnRight()
         turtle.turnRight()
-        turtle.forward(zWidth-1)
+        moveClearObstruction(zWidth-1)
         turtle.turnRight()
-        turtle.forward(xWidth-1)
+        moveClearObstruction(xWidth-1)
         turtle.turnRight()
         -- back to square 1
     end
