@@ -3,6 +3,18 @@ rednet.open("back")
 local logs = {}
 local claimedTurtle = 0
 
+local instructionMapping = 
+{
+    ["17"] = "move_forward",
+    ["31"] = "move_back",
+    ["30"] = "turn_left",
+    ["32"] = "turn_right",
+    ["16"] = "move_up",
+    ["18"] = "move_down",
+    ["19"] = "refuel",
+    ["33"] = "dig"
+}
+
 function claimTurtle(id) 
     rednet.broadcast("claim#"..id)
     print("Awaiting turtle reply")
@@ -21,6 +33,7 @@ function claimTurtle(id)
 end
 
 function gui() 
+    shell.run("clear")
     for k,v in ipairs(logs) do 
         print(k,v)
     end
@@ -36,12 +49,18 @@ function turtleSignalListener()
     end
 end
 
+function sendInstruction(id, key)
+    if instructionMapping[key] ~= nil then 
+        rednet.send(id, instructionMapping[key])
+    end
+end
+
 function control() 
     while true do 
         local event, key, isHeld = os.pullEvent("key")
-        print(key)
+        sendInstruction(claimedTurtle, key)
+        gui()
     end
-    gui()
 
 end
 
