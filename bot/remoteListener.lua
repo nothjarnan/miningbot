@@ -47,6 +47,7 @@ function instructionWatchdog()
             instructions[instructionList[1]]()
             table.remove(instructionList, 1)
         end
+        sleep(0.5)
     end
 end
 
@@ -54,6 +55,7 @@ function decodeInstructionsToTable(instructionString)
     local t = split(instructionString, ",")
     return t
 end
+parallel.waitForAny(instructionWatchdog, listen)
 
 
 
