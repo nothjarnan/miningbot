@@ -53,8 +53,10 @@ function digDown()
 end
 
 function stripMine(iterations_x, tunnelDepth)
-    for x = 1, iterations_x do 
+    for x = 1, iterations_x do
+        print("Digging tunnel") 
         sendDigTunnel(3, 3, tunnelDepth)
+        print("Returning")
         sendInstructionAwait("turn_left,turn_left")
         for z = 1, tunnelDepth do 
             if z < tunnelDepth then 
@@ -92,8 +94,10 @@ function sendDigTunnel(width, height, length)
             end       
         end
         sendInstructionAwait("turn_left")
-        for left=1, width do 
-            sendInstructionAwait("move_forward")
+        for left=1, width do
+            if left < width then 
+                sendInstructionAwait("move_forward")
+            end
         end
         sendInstructionAwait("turn_right")
         sendInstructionAwait("move_forward")
@@ -121,7 +125,7 @@ if #tArgs == 5 then
             elseif tArgs[1] == "tunnel" then 
                 sendDigTunnel(tonumber(tArgs[3]), tonumber(tArgs[4]), tonumber(tArgs[5]))
             elseif tArgs[1] == "stripmine" then 
-                stripMine(tonumber(tArgs[3], tonumber(tArgs[4])))
+                stripMine(tonumber(tArgs[3]), tonumber(tArgs[4]))
             end
         
         else 
