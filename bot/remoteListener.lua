@@ -66,15 +66,16 @@ end
 function instructionWatchdog() 
     while true do
         if #instructionList > 0 then
+            print(instructionList[1])
             if instructions[instructionList] ~= nil then 
                 instructions[instructionList[1]]()
-                if #instructionList - 1  == 0 then
+                if #instructionList - 1 == 0 then
                    sendDoneSignal() 
                 end
                 table.remove(instructionList, 1)
             else 
                 print("Invalid instruction detected, skipping")
-                if #instructionList - 1  == 0 then
+                if #instructionList - 1 == 0 then
                     sendDoneSignal() 
                  end
                 table.remove(instructionList, 1)
