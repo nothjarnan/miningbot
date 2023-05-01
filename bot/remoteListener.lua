@@ -54,7 +54,7 @@ end
 function instructionWatchdog() 
     while true do
         if #instructionList > 0 then 
-            print("Instructions left " + #instructionList)
+            print("Instructions left " .. #instructionList)
             instructions[instructionList[1]]()
             table.remove(instructionList, 1)
         end
