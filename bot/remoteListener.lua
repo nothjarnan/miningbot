@@ -12,9 +12,8 @@ local instructions =
 {
     ["move_forward"] = function() 
         if turtle.getFuelLevel() > 0 then 
-            if turtle.forward() == false then 
+            while turtle.forward() == false do
                 turtle.dig()
-                turtle.forward()
             end
         else 
             rednet.send(senderId, "err=nofuel") 
@@ -35,6 +34,11 @@ local instructions =
 }
 
 local instructionList = {}
+
+function update() 
+    shell.run("rm startup")
+    shell.run("wget https://raw.githubusercontent.com/nothjarnan/miningbot/main/bot/remoteListener.lua startup")
+end
 
 function split(inputstr, sep)
     if sep == nil then

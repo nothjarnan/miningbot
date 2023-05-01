@@ -1,5 +1,9 @@
 local attachedPeripherals = peripheral.getNames()
 
+function update() 
+    shell.run("rm remoteMine.lua")
+    shell.run("wget https://raw.githubusercontent.com/nothjarnan/miningbot/main/bot/remoteMine.lua")
+end
 
 local tArgs = {...}
 local turtle = -1
@@ -59,11 +63,12 @@ function stripMine(iterations_x, tunnelDepth)
     sendInstructionAwait("turn_right")
     sendDigTunnel(1,3,tunnelSpacing*iterations_x)
     sendInstructionAwait("180_right")
-    for distance, tunnelSpacing*iterations_x do 
-        if distance < tunnelSpacing*iterations_x do 
+    for distance = 1, tunnelSpacing*iterations_x do 
+        if distance < tunnelSpacing*iterations_x then 
             sendInstructionAwait("move_forward")
         end
     end
+    sendInstructionAwait("turn_right")
     for x = 1, iterations_x do
         print("Digging tunnel") 
         sendDigTunnel(3, 3, tunnelDepth)
