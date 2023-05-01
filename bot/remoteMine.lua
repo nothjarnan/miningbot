@@ -23,7 +23,7 @@ function claimTurtle(id)
     end
 end
 function sendInstructionAwait(instruction) 
-    rednet.send(turtle, instruction)
+    rednet.send(tonumber(turtle), instruction)
     local id, message = rednet.receive()
     if id == turtle then 
         if message == "ins_fin" then 
@@ -53,24 +53,28 @@ function digDown()
 end
 
 function sendDigTunnel(width, height, length)
-    for z = 0, length do 
-        for x = 0, width do 
+    print(width, height, length)
+    for z = 1, length do 
+        for x = 1, width do 
             -- dig one column            
-            for y = 0, height do 
+            for y = 1, height do 
                 sendInstructionAwait("dig")
-                sendInstructionAwait("move_up")
-                
+                if y < height then 
+                    sendInstructionAwait("move_up")
+                end
             end
             -- go down again
-            for down=0, height do 
+            for down=1, height do 
                 sendInstructionAwait("move_down")
             end
-            sendInstructionAwait("turn_right")
-            sendInstructionAwait("move_forward")
-            sendInstructionAwait("turn_left")
+            if x < width then 
+                sendInstructionAwait("turn_right")
+                sendInstructionAwait("move_forward")
+                sendInstructionAwait("turn_left")
+            end       
         end
         sendInstructionAwait("turn_left")
-        for left=0, width do 
+        for left=1, width do 
             sendInstructionAwait("move_forward")
         end
         sendInstructionAwait("turn_right")
