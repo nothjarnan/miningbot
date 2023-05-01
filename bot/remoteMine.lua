@@ -8,8 +8,10 @@ function claimTurtle(id)
     rednet.broadcast("claim#"..id)
     print("Awaiting turtle reply")
     while true do 
-        local recv_id, message = rednet.receive(0)
-        print(message, recv_id)
+        local recv_id, message = rednet.receive()
+        if recv_id ~= nil then 
+            print(message, recv_id)
+        end
         if recv_id == id and (message == "turtle_claim_success" or message=="turtle_owned_by_you")  then 
             turtle = id
             print("Success!")
