@@ -1,5 +1,5 @@
 -- För turtle
-rednet.open("right")
+rednet.open("left")
 
 local x = 0
 local y = 0 
@@ -8,10 +8,14 @@ local z = 0
 local instructions = 
 {
     ["move_forward"] = turtle.forward,
+    ["move_back"] = turtle.back,
+    ["move_up"] = turtle.up,
+    ["move_down"] = turtle.down,
     ["dig"] = turtle.dig,
     ["dig_down"] = turtle.digDown,
     ["turn_right"] = turtle.turnRight,
     ["turn_left"] = turtle.turnLeft,
+    ["refuel"] = turtle.refuel,
 }
 
 local instructionList = {}
@@ -42,8 +46,9 @@ function listen()
 end
 
 function instructionWatchdog() 
-    while true do 
+    while true do
         if #instructionList > 0 then 
+            print("Instructions left " + #instructionList)
             instructions[instructionList[1]]()
             table.remove(instructionList, 1)
         end
