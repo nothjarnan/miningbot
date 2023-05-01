@@ -10,7 +10,16 @@ local senderId = -1
 -- test
 local instructions = 
 {
-    ["move_forward"] = function() if turtle.getFuelLevel() > 0 then turtle.forward() else rednet.send(senderId, "err=nofuel") end end,
+    ["move_forward"] = function() 
+        if turtle.getFuelLevel() > 0 then 
+            if turtle.forward() == false then 
+                turtle.dig()
+                turtle.forward()
+            end
+        else 
+            rednet.send(senderId, "err=nofuel") 
+        end 
+    end,
     ["move_back"] = function() if turtle.getFuelLevel() > 0 then turtle.back() else rednet.send(senderId, "err=nofuel") end end,
     ["move_up"] = function() if turtle.getFuelLevel() > 0 then turtle.up() else rednet.send(senderId, "err=nofuel") end end,
     ["move_down"] = function() if turtle.getFuelLevel() > 0 then turtle.down() else rednet.send(senderId, "err=nofuel") end end,
@@ -21,8 +30,8 @@ local instructions =
     ["turn_left"] = turtle.turnLeft,
     ["refuel"] = turtle.refuel,
     ["report_fuel"] = function() rednet.send(senderId, turtle.getFuelLevel()) end,
-    ["180_left"] = function() turtle.turn_left() turtle.turnLeft() end,
-    ["180_right"] = function() turtle.turn_right() turtle.turnRight() end, 
+    ["180_left"] = function() turtle.turnLeft() turtle.turnLeft() end,
+    ["180_right"] = function() turtle.turnRight() turtle.turnRight() end, 
 }
 
 local instructionList = {}
@@ -43,7 +52,7 @@ end
 function listen()
     while true do 
         print("Awaiting further instructions")
-        local id, message = rednet.receive(5)
+        local id, message = rednet.receive()
         if message ~= nil then 
             if senderId == -1 and message == "claim#"..os.getComputerID() then 
                 senderId = id
@@ -94,7 +103,8 @@ function instructionWatchdog()
                     sendDoneSignal() 
                 end
                 table.remove(instructionList, 1)
-            else 
+            else
+                print(instructionList[1]) 
                 print("Invalid instruction detected, skipping")
                 if #instructionList - 1 == 0 then
                     sendDoneSignal() 

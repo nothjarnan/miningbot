@@ -54,23 +54,33 @@ end
 
 function stripMine(iterations_x, tunnelDepth)
     local tunnelSpacing = 5
+    sleep(3)
+    -- digging initial tunnel 
+    sendInstructionAwait("turn_right")
+    sendDigTunnel(1,3,tunnelSpacing*iterations_x)
+    sendInstructionAwait("180_right")
+    for distance, tunnelSpacing*iterations_x do 
+        if distance < tunnelSpacing*iterations_x do 
+            sendInstructionAwait("move_forward")
+        end
+    end
     for x = 1, iterations_x do
         print("Digging tunnel") 
         sendDigTunnel(3, 3, tunnelDepth)
         print("Returning")
-        sendInstructionAwait("turn_left,turn_left")
-        for z = 1, tunnelDepth do 
+        sendInstructionAwait("180_left")
+        for z = 0, tunnelDepth do 
             if z < tunnelDepth then 
                 sendInstructionAwait("move_forward")
             end
         end
-        sendInstructionAwait("turn_right")
+        sendInstructionAwait("turn_left")
         for sp = 1, tunnelSpacing do 
             if sp < tunnelSpacing then 
                 sendInstructionAwait("move_forward")
             end
         end
-        sendInstructionAwait("turn_left,turn_left")
+        sendInstructionAwait("turn_left")
     end
 end
 
