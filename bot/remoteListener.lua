@@ -4,6 +4,9 @@ rednet.open("left")
 local x = 0
 local y = 0 
 local z = 0
+
+local senderId = -1
+
 -- test
 local instructions = 
 {
@@ -36,10 +39,14 @@ end
 
 function listen()
     while true do 
-        local id, message = rednet.receive() 
+        local id, message = rednet.receive()
+        if senderId == -1 and message == "claim#"..os.getComputerId() then 
+            senderId = id
+            print("Turtle claimed by " .. id .. " until reboot")
+        end
         print("Decoding instructions")
         local instructionTable = decodeInstructionsToTable(message)
-        if id ~= 6 then 
+        if id ~= senderId then 
             instructionTable = {}
             print("Invalid source - no instructions decoded")
         end
@@ -52,14 +59,24 @@ function listen()
     end
 end
 
+function sendDoneSignal()
+    rednet.send("ins_fin",senderId)
+end
+
 function instructionWatchdog() 
     while true do
         if #instructionList > 0 then
             if instructions[instructionList] ~= nil then 
                 instructions[instructionList[1]]()
+                if #instructionList - 1  == 0 then
+                   sendDoneSignal() 
+                end
                 table.remove(instructionList, 1)
             else 
                 print("Invalid instruction detected, skipping")
+                if #instructionList - 1  == 0 then
+                    sendDoneSignal() 
+                 end
                 table.remove(instructionList, 1)
             end
             print("Instructions left " .. #instructionList)
