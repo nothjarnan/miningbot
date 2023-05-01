@@ -3,17 +3,16 @@ local attachedPeripherals = peripheral.getNames()
 
 local tArgs = {...}
 local turtle = -1
-function claimTurtle(id) 
+function claimTurtle(id)
+    id = tonumber(id) 
     print("Claiming turtle #"..id)
     rednet.broadcast("claim#"..id)
     print("Awaiting turtle reply")
     while true do 
         local recv_id, message = rednet.receive()
-        if recv_id ~= nil then 
-            print(message, recv_id)
-        end
+        
         if recv_id == id and (message == "turtle_claim_success" or message=="turtle_owned_by_you")  then 
-            turtle = id
+            turtle = tonumber(id)
             print("Success!")
             return true
         end
