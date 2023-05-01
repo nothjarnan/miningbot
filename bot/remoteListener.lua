@@ -36,7 +36,13 @@ end
 function listen()
     while true do 
         local id, message = rednet.receive() 
+        print("Decoding instructions")
         local instructionTable = decodeInstructionsToTable(message)
+        if id ~= 6 then 
+            instructionTable = {}
+            print("Invalid source - no instructions decoded")
+        end
+        print("Adding decoded instructions to queue")
         for k,v in ipairs(instructionTable) do
             print(k..","..v) 
             table.insert(instructionList, v)
