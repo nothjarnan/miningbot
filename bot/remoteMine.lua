@@ -52,6 +52,21 @@ function digDown()
     sendInstructionAwait("move_down")
 end
 
+function stripMine(iterations_x, tunnelDepth)
+    for x = 1, iterations_x do 
+        sendDigTunnel(3, 3, tunnelDepth)
+        sendInstructionAwait("turn_left,turn_left")
+        for z = 1, tunnelDepth do 
+            if z < tunnelDepth then 
+                sendInstructionAwait("move_forward")
+            end
+        end
+        sendInstructionAwait("turn_right")
+        sendInstructionAwait("move_forward,move_forward,move_forward,move_forward,move_forward")
+        sendInstructionAwait("turn_left,turn_left")
+    end
+end
+
 function sendDigTunnel(width, height, length)
     print(width, height, length)
     sendInstructionAwait("dig")
@@ -105,7 +120,10 @@ if #tArgs == 5 then
                 sendDigLayer(tArgs[3], tArgs[4])
             elseif tArgs[1] == "tunnel" then 
                 sendDigTunnel(tonumber(tArgs[3]), tonumber(tArgs[4]), tonumber(tArgs[5]))
+            elseif tArgs[1] == "stripmine" then 
+                stripMine(tonumber(tArgs[3], tonumber(tArgs[4])))
             end
+        
         else 
             print("Turtle claim not ok, aborting")
         end
