@@ -39,7 +39,8 @@ end
 
 function listen()
     while true do 
-        local id, message = rednet.receive()
+        print("Awaiting further instructions")
+        local id, message = rednet.receive(5)
         if senderId == -1 and message == "claim#"..os.getComputerID() then 
             senderId = id
             print("Turtle claimed by " .. id .. " until reboot")

@@ -19,7 +19,7 @@ function claimTurtle(id)
     rednet.broadcast("claim#"..id)
     print("Awaiting turtle reply")
     while true do 
-        local recv_id, message = rednet.receive()
+        local recv_id, message = rednet.receive(5)
         if recv_id == id and (message == "turtle_claim_success" or message=="turtle_owned_by_you")  then 
             claimedTurtle = id
             print("Success!")
@@ -41,7 +41,7 @@ end
 
 function turtleSignalListener() 
     while true do 
-        local recv_id, message = rednet.receive()
+        local recv_id, message = rednet.receive(5)
         if recv_id == claimedTurtle then 
             table.insert(logs, message)
         end
