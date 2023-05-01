@@ -44,6 +44,9 @@ function listen()
             senderId = id
             print("Turtle claimed by " .. id .. " until reboot")
             rednet.send(id, "turtle_claim_success")
+        elseif message == "claim#"..os.getComputerID() and senderId == id then 
+            print("Turtle already claimed by this user")
+            rednet.send(id, "turtle_owned_by_you")
         elseif message == "claim#"..os.getComputerID() then 
             -- Already claimed 
             print("Claim attempt detected - sending error")
