@@ -54,10 +54,15 @@ end
 
 function instructionWatchdog() 
     while true do
-        if #instructionList > 0 then 
+        if #instructionList > 0 then
+            if instructions[instructionList] ~= nil then 
+                instructions[instructionList[1]]()
+                table.remove(instructionList, 1)
+            else 
+                print("Invalid instruction detected, skipping")
+                table.remove(instructionList, 1)
+            end
             print("Instructions left " .. #instructionList)
-            instructions[instructionList[1]]()
-            table.remove(instructionList, 1)
         end
         sleep(0.5)
     end
