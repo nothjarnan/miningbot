@@ -50,8 +50,8 @@ function turtleSignalListener()
 end
 
 function sendInstruction(id, key)
-    if instructionMapping[key] ~= nil then 
-        rednet.send(id, instructionMapping[key])
+    if instructionMapping[tostring(key)] ~= nil then 
+        rednet.send(id, instructionMapping[tostring(key)])
     end
 end
 

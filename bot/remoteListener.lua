@@ -66,6 +66,9 @@ function listen()
         sleep(0)
     end
 end
+function sendInfo(id, infoMessage)
+    rednet.send(id, "info="..infoMessage)
+end
 
 function sendError(id, errorMessage)
     rednet.send(id, "err="..errorMessage)
@@ -80,8 +83,9 @@ function instructionWatchdog()
         if #instructionList > 0 then
             if instructions[instructionList[1]] ~= nil then 
                 instructions[instructionList[1]]()
+
                 if #instructionList - 1 == 0 then
-                   sendDoneSignal() 
+                    sendDoneSignal() 
                 end
                 table.remove(instructionList, 1)
             else 
