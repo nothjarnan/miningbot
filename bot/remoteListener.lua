@@ -43,6 +43,11 @@ function listen()
         if senderId == -1 and message == "claim#"..os.getComputerID() then 
             senderId = id
             print("Turtle claimed by " .. id .. " until reboot")
+            rednet.send(id, "turtle_claim_success")
+        elseif message == "claim#"..os.getComputerID() then 
+            -- Already claimed 
+            print("Claim attempt detected - sending error")
+            sendError(id, "turtle_already_claimed")
         end
         print("Decoding instructions")
         local instructionTable = decodeInstructionsToTable(message)
@@ -57,6 +62,10 @@ function listen()
         end
         sleep(0)
     end
+end
+
+function sendError(id, errorMessage)
+    rednet.send(id, "err="..errorMessage)
 end
 
 function sendDoneSignal()
