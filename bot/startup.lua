@@ -17,6 +17,7 @@ end
 
 function moveClearObstruction(amount) 
     local has_block, data = turtle.inspect()
+    print(data)
     if has_block then 
         turtle.dig()
     end
@@ -31,7 +32,7 @@ function mine(xWidth, zWidth, depth)
         turtle.digDown()
         turtle.down()
         for right=1, xWidth-1, 1 do 
-            for fwd=1, zWidth-1, 1 do 
+            for fwd=1, zWidth, 1 do 
                 turtle.dig()
                 moveClearObstruction()
                 print("dig forward")
@@ -50,11 +51,9 @@ function mine(xWidth, zWidth, depth)
                 moveClearObstruction()
                 turtle.turnLeft()
             end
-            turtle.dig()
             forward = not forward
         end
         print("returning")
-        break
         -- return 
         turtle.turnRight()
         turtle.turnRight()
