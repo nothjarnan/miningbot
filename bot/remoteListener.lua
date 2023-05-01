@@ -66,8 +66,7 @@ end
 function instructionWatchdog() 
     while true do
         if #instructionList > 0 then
-            print(instructionList[1])
-            if instructions[instructionList] ~= nil then 
+            if instructions[instructionList[1]] ~= nil then 
                 instructions[instructionList[1]]()
                 if #instructionList - 1 == 0 then
                    sendDoneSignal() 
