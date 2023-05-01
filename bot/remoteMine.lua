@@ -101,7 +101,7 @@ if #tArgs == 5 then
             if tArgs[1] == "hole" then 
                 sendDigLayer(tArgs[3], tArgs[4])
             elseif tArgs[1] == "tunnel" then 
-                sendDigTunnel(tArgs[3], tArgs[4], tArgs[5])
+                sendDigTunnel(tonumber(tArgs[3]), tonumber(tArgs[4]), tonumber(tArgs[5]))
             end
         else 
             print("Turtle claim not ok, aborting")
