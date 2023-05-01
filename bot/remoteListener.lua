@@ -13,6 +13,7 @@ local instructions =
     ["move_down"] = turtle.down,
     ["dig"] = turtle.dig,
     ["dig_down"] = turtle.digDown,
+    ["dig_up"] = turtle.digUp,
     ["turn_right"] = turtle.turnRight,
     ["turn_left"] = turtle.turnLeft,
     ["refuel"] = turtle.refuel,
