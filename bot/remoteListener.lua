@@ -10,7 +10,7 @@ local senderId = -1
 -- test
 local instructions = 
 {
-    ["move_forward"] = function() if turtle.getFuelLevel() > 0 then turtle.forward() else rednet.send(senderId, "err=nofuel") end,
+    ["move_forward"] = function() if turtle.getFuelLevel() > 0 then turtle.forward() else rednet.send(senderId, "err=nofuel") end end,
     ["move_back"] = turtle.back,
     ["move_up"] = turtle.up,
     ["move_down"] = turtle.down,
