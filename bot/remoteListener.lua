@@ -20,6 +20,7 @@ local instructions =
     ["turn_right"] = turtle.turnRight,
     ["turn_left"] = turtle.turnLeft,
     ["refuel"] = turtle.refuel,
+    ["report_fuel"] = function() rednet.send(senderId, turtle.getFuelLevel()) end,
 }
 
 local instructionList = {}

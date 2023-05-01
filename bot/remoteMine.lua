@@ -54,6 +54,7 @@ end
 
 function sendDigTunnel(width, height, length)
     print(width, height, length)
+    sendInstructionAwait("dig")
     for z = 1, length do 
         for x = 1, width do 
             -- dig one column            
@@ -65,7 +66,9 @@ function sendDigTunnel(width, height, length)
             end
             -- go down again
             for down=1, height do 
-                sendInstructionAwait("move_down")
+                if down < height then 
+                    sendInstructionAwait("move_down")
+                end
             end
             if x < width then 
                 sendInstructionAwait("turn_right")
