@@ -11,9 +11,9 @@ local senderId = -1
 local instructions = 
 {
     ["move_forward"] = function() if turtle.getFuelLevel() > 0 then turtle.forward() else rednet.send(senderId, "err=nofuel") end end,
-    ["move_back"] = turtle.back,
-    ["move_up"] = turtle.up,
-    ["move_down"] = turtle.down,
+    ["move_back"] = function() if turtle.getFuelLevel() > 0 then turtle.back() else rednet.send(senderId, "err=nofuel") end end,
+    ["move_up"] = function() if turtle.getFuelLevel() > 0 then turtle.up() else rednet.send(senderId, "err=nofuel") end end,
+    ["move_down"] = function() if turtle.getFuelLevel() > 0 then turtle.down() else rednet.send(senderId, "err=nofuel") end end,
     ["dig"] = turtle.dig,
     ["dig_down"] = turtle.digDown,
     ["dig_up"] = turtle.digUp,
@@ -21,6 +21,8 @@ local instructions =
     ["turn_left"] = turtle.turnLeft,
     ["refuel"] = turtle.refuel,
     ["report_fuel"] = function() rednet.send(senderId, turtle.getFuelLevel()) end,
+    ["180_left"] = function() turtle.turn_left() turtle.turnLeft() end,
+    ["180_right"] = function() turtle.turn_right() turtle.turnRight() end, 
 }
 
 local instructionList = {}

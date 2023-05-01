@@ -53,6 +53,7 @@ function digDown()
 end
 
 function stripMine(iterations_x, tunnelDepth)
+    local tunnelSpacing = 5
     for x = 1, iterations_x do
         print("Digging tunnel") 
         sendDigTunnel(3, 3, tunnelDepth)
@@ -64,7 +65,11 @@ function stripMine(iterations_x, tunnelDepth)
             end
         end
         sendInstructionAwait("turn_right")
-        sendInstructionAwait("move_forward,move_forward,move_forward,move_forward,move_forward")
+        for sp = 1, tunnelSpacing do 
+            if sp < tunnelSpacing then 
+                sendInstructionAwait("move_forward")
+            end
+        end
         sendInstructionAwait("turn_left,turn_left")
     end
 end
