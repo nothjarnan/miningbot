@@ -41,29 +41,31 @@ function listen()
     while true do 
         print("Awaiting further instructions")
         local id, message = rednet.receive(5)
-        if senderId == -1 and message == "claim#"..os.getComputerID() then 
-            senderId = id
-            print("Turtle claimed by " .. id .. " until reboot")
-            rednet.send(id, "turtle_claim_success")
-        elseif message == "claim#"..os.getComputerID() and senderId == id then 
-            print("Turtle already claimed by this user")
-            rednet.send(id, "turtle_owned_by_you")
-        elseif message == "claim#"..os.getComputerID() then 
-            -- Already claimed 
-            print("Claim attempt detected - sending error")
-            sendError(id, "turtle_already_claimed")
-        end
-        print("Decoding instructions")
-        local instructionTable = decodeInstructionsToTable(message)
-        if id ~= senderId then 
-            instructionTable = {}
-            print("Invalid source - no instructions decoded")
-        end
-        print("Adding decoded instructions to queue")
-        for k,v in ipairs(instructionTable) do
-            print(k..","..v) 
-            table.insert(instructionList, v)
-        end
+        if message ~= nil then 
+            if senderId == -1 and message == "claim#"..os.getComputerID() then 
+                senderId = id
+                print("Turtle claimed by " .. id .. " until reboot")
+                rednet.send(id, "turtle_claim_success")
+            elseif message == "claim#"..os.getComputerID() and senderId == id then 
+                print("Turtle already claimed by this user")
+                rednet.send(id, "turtle_owned_by_you")
+            elseif message == "claim#"..os.getComputerID() then 
+                -- Already claimed 
+                print("Claim attempt detected - sending error")
+                sendError(id, "turtle_already_claimed")
+            end
+            print("Decoding instructions")
+            local instructionTable = decodeInstructionsToTable(message)
+            if id ~= senderId then 
+                instructionTable = {}
+                print("Invalid source - no instructions decoded")
+            end
+            print("Adding decoded instructions to queue")
+            for k,v in ipairs(instructionTable) do
+                print(k..","..v) 
+                table.insert(instructionList, v)
+            end
+        end       
         sleep(0)
     end
 end
