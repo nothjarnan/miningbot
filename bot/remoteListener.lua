@@ -1,6 +1,6 @@
 -- För turtle
 rednet.open("left")
-local version = "v0.10"
+local version = "v0.11"
 print("Running listener "..version)
 -- local positioning
 local x = 0
@@ -11,6 +11,7 @@ local localDirection = 0
 
 local senderId = -1
 
+instructionList[1] = "locate"
 -- test
 local instructions = 
 {
@@ -36,6 +37,7 @@ local instructions =
     ["180_left"] = function() turtle.turnLeft() turtle.turnLeft() end,
     ["180_right"] = function() turtle.turnRight() turtle.turnRight() end, 
     ["locate"] = function() x,y,z = gps.locate(1); rednet.send("{x="..tostring(x)..",y="..tostring(y)..",z="..tostring(z).."}", senderId) end,
+    ["reboot"] = function() os.reboot() end,
 }
 
 local instructionList = {}
