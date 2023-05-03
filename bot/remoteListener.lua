@@ -1,6 +1,6 @@
 -- För turtle
 rednet.open("left")
-local version = "v0.13"
+local version = "v0.14"
 print("Running listener "..version)
 -- local positioning
 local x = 0
@@ -46,8 +46,6 @@ local instructions =
 }
 
 local instructionList = {}
-
-instructionList[1] = "locate"
 
 function update() 
     shell.run("rm startup")
