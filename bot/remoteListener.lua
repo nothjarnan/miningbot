@@ -7,6 +7,8 @@ local x = 0
 local y = 0 
 local z = 0
 
+x,y,z = gps.locate(1)
+
 local localDirection = 0
 
 local senderId = -1
