@@ -1,9 +1,12 @@
 -- För turtle
 rednet.open("left")
 
+-- local positioning
 local x = 0
 local y = 0 
 local z = 0
+
+local localDirection = 0
 
 local senderId = -1
 
@@ -31,6 +34,7 @@ local instructions =
     ["report_fuel"] = function() rednet.send(senderId, turtle.getFuelLevel()) end,
     ["180_left"] = function() turtle.turnLeft() turtle.turnLeft() end,
     ["180_right"] = function() turtle.turnRight() turtle.turnRight() end, 
+    ["locate"] = function() x,y,z = gps.locate(1); rednet.send("{x="..tostring(x)..",y="..tostring(y)..",z="..tostring(z).."}", senderId) end,
 }
 
 local instructionList = {}
@@ -39,6 +43,7 @@ function update()
     shell.run("rm startup")
     shell.run("wget https://raw.githubusercontent.com/nothjarnan/miningbot/main/bot/remoteListener.lua startup")
 end
+
 
 function split(inputstr, sep)
     if sep == nil then
