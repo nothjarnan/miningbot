@@ -40,7 +40,8 @@ local instructions =
             rednet.send(senderId, "{x="..tostring(x)..",y="..tostring(y)..",z="..tostring(z).."}") 
         else 
             rednet.broadcast("{x="..tostring(x)..",y="..tostring(y)..",z="..tostring(z).."}")
-        end,
+        end
+    end,
     ["reboot"] = function() os.reboot() end,
 }
 
