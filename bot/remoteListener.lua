@@ -61,7 +61,6 @@ end
 
 function listen()
     while true do 
-        print("Awaiting further instructions")
         local id, message = rednet.receive()
         if message ~= nil then 
             if senderId == -1 and message == "claim#"..os.getComputerID() then 
@@ -131,6 +130,9 @@ function decodeInstructionsToTable(instructionString)
     local t = split(instructionString, ",")
     return t
 end
+print("Updating")
+update()
+print("Done updating")
 parallel.waitForAny(instructionWatchdog, listen)
 
 
