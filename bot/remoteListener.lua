@@ -1,6 +1,7 @@
 -- För turtle
 rednet.open("left")
-
+local version = "v0.10"
+print("Running listener "..version)
 -- local positioning
 local x = 0
 local y = 0 
