@@ -1,6 +1,6 @@
 -- För turtle
 rednet.open("left")
-local version = "v0.12"
+local version = "v0.13"
 print("Running listener "..version)
 -- local positioning
 local x = 0
@@ -34,7 +34,13 @@ local instructions =
     ["report_fuel"] = function() rednet.send(senderId, turtle.getFuelLevel()) end,
     ["180_left"] = function() turtle.turnLeft() turtle.turnLeft() end,
     ["180_right"] = function() turtle.turnRight() turtle.turnRight() end, 
-    ["locate"] = function() x,y,z = gps.locate(1); rednet.send(senderId, "{x="..tostring(x)..",y="..tostring(y)..",z="..tostring(z).."}") end,
+    ["locate"] = function() 
+        x,y,z = gps.locate(1)
+        if senderId ~= -1 then 
+            rednet.send(senderId, "{x="..tostring(x)..",y="..tostring(y)..",z="..tostring(z).."}") 
+        else 
+            rednet.broadcast("{x="..tostring(x)..",y="..tostring(y)..",z="..tostring(z).."}")
+        end,
     ["reboot"] = function() os.reboot() end,
 }
 
